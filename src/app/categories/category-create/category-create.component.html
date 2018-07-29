@@ -1,1 +1,11 @@
-<h1>Category create component</h1>
+
+<mat-card>
+  <form class="example-form">
+    <mat-form-field class="example-full-width">
+      <input matInput placeholder="Name">
+    </mat-form-field>
+
+<mat-slider thumbLabel [displayWith]="formatLabel" min="0" max="100"></mat-slider>
+    <button mat-raised-button color="primary" (click)="onAddCategory()">CLICK</button>
+  </form>
+</mat-card>
