@@ -2,10 +2,12 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
+import { CategoryCreateComponent } from './categories/category-create/category-create.component';
 
 @NgModule({
   declarations: [
-    AppComponent
+    AppComponent,
+    CategoryCreateComponent
   ],
   imports: [
     BrowserModule
