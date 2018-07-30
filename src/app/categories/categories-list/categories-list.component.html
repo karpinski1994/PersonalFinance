@@ -9,6 +9,10 @@
         {{outcome.name}}: <span class="cost">{{outcome.cost}} $</span>
       </li>
     </ul>
+    <mat-action-row>
+      <button mat-button color="primary">Edit</button>
+      <button mat-button color="warn">Delete</button>
+    </mat-action-row>
   </mat-expansion-panel>
 </mat-accordion>
 <mat-card *ngIf="categories.length <= 0">
