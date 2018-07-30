@@ -20,6 +20,7 @@ export class CategoryCreateComponent {
     }
 
     this.catServ.addCategory(form.value.enteredTitle, form.value.enteredPercent);
+    form.resetForm();
   }
 
   // For slider
