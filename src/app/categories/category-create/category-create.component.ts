@@ -13,6 +13,10 @@ export class CategoryCreateComponent {
   @Output() categoryCreated = new EventEmitter();
 
   onAddCategory(form: NgForm) {
+    if (form.invalid) {
+      return;
+    }
+
     const category: Category = {
       title: form.value.enteredTitle,
       budgetPercent: form.value.enteredPercent,
