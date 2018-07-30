@@ -1,7 +1,3 @@
-mat-card {
-  width: 50%;
-  margin: auto;
-}
 
 mat-form-field {
   width: 100%;
@@ -15,4 +11,7 @@ mat-slider {
   width: 100%;
 }
 
+p {
+  color: rgba(0, 0, 0, .57);
+}
 

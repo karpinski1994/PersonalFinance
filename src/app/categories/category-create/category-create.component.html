@@ -2,10 +2,16 @@
 <mat-card>
   <form class="example-form">
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Name">
+      <input matInput placeholder="Title" name="enteredTitle" [(ngModel)]="enteredTitle">
     </mat-form-field>
-
-<mat-slider thumbLabel [displayWith]="formatLabel" min="0" max="100"></mat-slider>
+    <p>Pick a percent of budget:</p>
+    <mat-slider
+      thumbLabel
+      [displayWith]="formatLabel"
+      min="0"
+      max="100"
+      (input)="pickPercent($event)">
+    </mat-slider>
     <button mat-raised-button color="primary" (click)="onAddCategory()">CLICK</button>
   </form>
 </mat-card>

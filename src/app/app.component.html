@@ -1,2 +1,5 @@
 <app-navbar></app-navbar>
-<app-category-create></app-category-create>
+<main>
+  <app-category-create (categoryCreated)="onCategoryAdded($event)"></app-category-create>
+  <app-categories-list [storedCategories]="categories"></app-categories-list>
+</main>

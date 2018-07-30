@@ -1,24 +1,31 @@
 import { BrowserModule, HAMMER_GESTURE_CONFIG } from '@angular/platform-browser';
-import { GestureConfig, MatCheckboxModule } from '@angular/material';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { NgModule } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 import {
+  GestureConfig,
   MatInputModule,
   MatCardModule,
   MatButtonModule,
   MatSliderModule,
   MatSidenavModule,
   MatCheckboxModule,
-  MatIconModule
+  MatIconModule,
+  MatExpansionModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
 import { CategoryCreateComponent } from './categories/category-create/category-create.component';
 import { NavbarComponent } from './navbar/navbar.component';
+import { CategoriesListComponent } from './categories/categories-list/categories-list.component';
 
 @NgModule({
-  declarations: [AppComponent, CategoryCreateComponent, NavbarComponent],
+  declarations: [
+    AppComponent,
+    CategoryCreateComponent,
+    CategoriesListComponent,
+    NavbarComponent
+  ],
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
@@ -29,7 +36,8 @@ import { NavbarComponent } from './navbar/navbar.component';
     MatSliderModule,
     MatSidenavModule,
     MatCheckboxModule,
-    MatIconModule
+    MatIconModule,
+    MatExpansionModule
   ],
   providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
   bootstrap: [AppComponent]

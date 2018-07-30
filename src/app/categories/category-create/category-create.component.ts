@@ -1,4 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, EventEmitter, Output } from '@angular/core';
+
+import { Category } from '../category.model';
 
 @Component({
   selector: 'app-category-create',
@@ -6,8 +8,23 @@ import { Component } from '@angular/core';
   styleUrls: ['./category-create.component.css']
 })
 export class CategoryCreateComponent {
+  enteredTitle = '';
+  enteredPercent = 0;
+  @Output() categoryCreated = new EventEmitter();
+
   onAddCategory() {
-    console.log('added');
+    const category: Category = {
+      title: this.enteredTitle,
+      budgetPercent: this.enteredPercent,
+      outcomesList: []
+    };
+
+    this.categoryCreated.emit(category);
+  }
+
+  // For slider
+  pickPercent(event) {
+    this.enteredPercent = event.value;
   }
 
   formatLabel(value: number | null) {

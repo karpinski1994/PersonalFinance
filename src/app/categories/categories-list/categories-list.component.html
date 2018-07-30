@@ -1,0 +1,18 @@
+<mat-accordion multi="true" *ngIf="storedCategories.length > 0">
+  <mat-expansion-panel *ngFor="let category of storedCategories">
+    <mat-expansion-panel-header color="primary">
+      {{category.title}}
+    </mat-expansion-panel-header>
+    <ul>
+      <p>Budget's planned part: <span class="percent">{{category.budgetPercent}} %</span></p>
+      <li *ngFor="let outcome of category.outcomesList">
+        {{outcome.name}}: <span class="cost">{{outcome.cost}} $</span>
+      </li>
+    </ul>
+  </mat-expansion-panel>
+</mat-accordion>
+<mat-card *ngIf="storedCategories.length <= 0">
+  <p>
+    No categories added yet.
+  </p>
+</mat-card>

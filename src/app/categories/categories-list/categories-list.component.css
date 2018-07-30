@@ -1,0 +1,22 @@
+:host {
+  display: block;
+  margin-top: 2rem;
+}
+ul {
+  list-style: none;
+  padding: 0;
+}
+li {
+  padding: .3rem;
+  padding-top: 0;
+}
+.percent {
+  color: green;
+}
+.cost {
+  color: red;
+}
+
+mat-card p {
+  text-align: center;
+}
