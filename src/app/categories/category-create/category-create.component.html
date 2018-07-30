@@ -4,11 +4,18 @@
     <mat-form-field class="example-full-width">
       <input
         matInput
+        type="text"
         placeholder="Title"
         name="enteredTitle"
-        ngModel>
+        ngModel
+        required
+        #title="ngModel">
+      <mat-error *ngIf="title.invalid">
+        Please enter a category title.
+      </mat-error>
     </mat-form-field>
-    <p>Pick a percent of budget:</p>
+
+    <p>Part of budget</p>
     <mat-slider
       thumbLabel
       [displayWith]="formatLabel"
