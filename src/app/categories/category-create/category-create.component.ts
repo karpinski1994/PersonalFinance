@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Output } from '@angular/core';
-
+import { NgForm } from '@angular/forms';
 import { Category } from '../category.model';
 
 @Component({
@@ -12,10 +12,10 @@ export class CategoryCreateComponent {
   enteredPercent = 0;
   @Output() categoryCreated = new EventEmitter();
 
-  onAddCategory() {
+  onAddCategory(form: NgForm) {
     const category: Category = {
-      title: this.enteredTitle,
-      budgetPercent: this.enteredPercent,
+      title: form.value.enteredTitle,
+      budgetPercent: form.value.enteredPercent,
       outcomesList: []
     };
 

@@ -1,8 +1,12 @@
 
 <mat-card>
-  <form class="example-form">
+<form class="example-form" (submit)="onAddCategory(categoryForm)" #categoryForm="ngForm">
     <mat-form-field class="example-full-width">
-      <input matInput placeholder="Title" name="enteredTitle" [(ngModel)]="enteredTitle">
+      <input
+        matInput
+        placeholder="Title"
+        name="enteredTitle"
+        ngModel>
     </mat-form-field>
     <p>Pick a percent of budget:</p>
     <mat-slider
@@ -10,8 +14,14 @@
       [displayWith]="formatLabel"
       min="0"
       max="100"
-      (input)="pickPercent($event)">
+      (input)="pickPercent($event)"
+      name="enteredPercent"
+      ngModel>
     </mat-slider>
-    <button mat-raised-button color="primary" (click)="onAddCategory()">CLICK</button>
+    <button
+      mat-raised-button
+      color="primary"
+     (click)="onAddCategory()">
+     Add Category</button>
   </form>
 </mat-card>
