@@ -39,7 +39,9 @@ import { CategoriesListComponent } from './categories/categories-list/categories
     MatIconModule,
     MatExpansionModule
   ],
-  providers: [{ provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }],
+  providers: [
+    { provide: HAMMER_GESTURE_CONFIG, useClass: GestureConfig }
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule {}

@@ -1,5 +1,5 @@
-<mat-accordion multi="true" *ngIf="storedCategories.length > 0">
-  <mat-expansion-panel *ngFor="let category of storedCategories">
+<mat-accordion multi="true" *ngIf="categories.length > 0">
+  <mat-expansion-panel *ngFor="let category of categories">
     <mat-expansion-panel-header color="primary">
       {{category.title}}
     </mat-expansion-panel-header>
@@ -11,7 +11,7 @@
     </ul>
   </mat-expansion-panel>
 </mat-accordion>
-<mat-card *ngIf="storedCategories.length <= 0">
+<mat-card *ngIf="categories.length <= 0">
   <p>
     No categories added yet.
   </p>

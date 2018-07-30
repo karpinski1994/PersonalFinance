@@ -1,6 +1,7 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component } from '@angular/core';
 import { NgForm } from '@angular/forms';
-import { Category } from '../category.model';
+
+import { CategoriesService } from '../categories.service';
 
 @Component({
   selector: 'app-category-create',
@@ -10,20 +11,15 @@ import { Category } from '../category.model';
 export class CategoryCreateComponent {
   enteredTitle = '';
   enteredPercent = 0;
-  @Output() categoryCreated = new EventEmitter();
+
+  constructor( public catServ: CategoriesService) {}
 
   onAddCategory(form: NgForm) {
-    if (form.invalid) {
+      if (form.invalid) {
       return;
     }
 
-    const category: Category = {
-      title: form.value.enteredTitle,
-      budgetPercent: form.value.enteredPercent,
-      outcomesList: []
-    };
-
-    this.categoryCreated.emit(category);
+    this.catServ.addCategory(form.value.enteredTitle, form.value.enteredPercent);
   }
 
   // For slider
