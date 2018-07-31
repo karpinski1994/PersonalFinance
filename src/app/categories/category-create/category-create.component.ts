@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
 
 import { CategoriesService } from '../categories.service';
@@ -8,18 +9,30 @@ import { CategoriesService } from '../categories.service';
   templateUrl: './category-create.component.html',
   styleUrls: ['./category-create.component.css']
 })
-export class CategoryCreateComponent {
+export class CategoryCreateComponent implements OnInit, OnDestroy {
   enteredTitle = '';
   enteredPercent = 0;
+  availablePercent: number;
+  private percentSub: Subscription;
 
-  constructor( public catServ: CategoriesService) {}
+  constructor(public catServ: CategoriesService) {}
+
+  ngOnInit() {
+    this.percentSub = this.catServ
+      .getPercentUpdateListener()
+      .subscribe(percent => {
+        this.availablePercent = percent;
+      });
+  }
 
   onAddCategory(form: NgForm) {
-      if (form.invalid) {
+    if (form.invalid) {
       return;
     }
-
-    this.catServ.addCategory(form.value.enteredTitle, form.value.enteredPercent);
+    this.catServ.addCategory(
+      form.value.enteredTitle,
+      form.value.enteredPercent
+    );
     form.resetForm();
   }
 
@@ -38,5 +51,9 @@ export class CategoryCreateComponent {
     }
 
     return value;
+  }
+
+  ngOnDestroy() {
+    this.percentSub.unsubscribe();
   }
 }

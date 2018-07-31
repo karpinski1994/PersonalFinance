@@ -20,7 +20,7 @@
       thumbLabel
       [displayWith]="formatLabel"
       min="0"
-      max="100"
+      [max]="availablePercent"
       (input)="pickPercent($event)"
       name="enteredPercent"
       ngModel>
