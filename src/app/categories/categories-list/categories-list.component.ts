@@ -17,10 +17,10 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   constructor( public  catServ: CategoriesService ) {}
 
   ngOnInit() {
-    this.categories = this.catServ.getCategories();
+    this.catServ.getCategories();
     this.categoriesSub = this.catServ.getCategoryUpdateListener()
     .subscribe((categories: Array<Category>) => {
-            this.categories = categories;
+      this.categories = categories;
     });
   }
 

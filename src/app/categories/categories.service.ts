@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 import { Category } from './category.model';
 
@@ -11,8 +12,16 @@ export class CategoriesService {
   private availablePercent = 100;
   private percentUpdated = new Subject<number>();
 
+  constructor(private http: HttpClient) {}
+
   getCategories() {
-    return [...this.categories];
+    this.http.get<{message: string, categories: Array<Category>}>('http://localhost:3000/api/categories')
+    .subscribe((categoryData) => {
+      this.categories = categoryData.categories;
+      this.categoriesUpdated.next([...this.categories]);
+      this.countAvailablePercent();
+      this.percentUpdated.next(this.availablePercent);
+    });
   }
 
   getCategoryUpdateListener() {
@@ -20,7 +29,7 @@ export class CategoriesService {
   }
 
   addCategory(title: string, percent: number) {
-    const category: Category = { title: title, budgetPercent: percent, outcomesList: []};
+    const category: Category = { id: null, title: title, budgetPercent: percent, outcomesList: []};
     this.categories.push(category);
     this.categoriesUpdated.next([...this.categories]);
     this.countAvailablePercent();
