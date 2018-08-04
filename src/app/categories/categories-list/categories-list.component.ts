@@ -24,6 +24,10 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
     });
   }
 
+  onDelete(categoryId: string) {
+    this.catServ.deleteCategory(categoryId);
+  }
+
   ngOnDestroy() {
     this.categoriesSub.unsubscribe();
   }

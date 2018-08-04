@@ -1,6 +1,21 @@
 const express = require('express');
+const bodyParser = require('body-parser');
+const mongoose = require('mongoose');
+
+const Category = require('./models/category');
 
 const app = express();
+
+mongoose.connect('mongodb+srv://@cluster0-vz0or.mongodb.net/test?retryWrites=true')
+.then(() => {
+  console.log('Connected to the database.');
+})
+.catch(() => {
+  console.log('Connection to the database failed.')
+});
+
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({extended: false}));
 
 app.use((req, res, next) => {
   res.setHeader("Access-Control-Allow-Origin", "*");
@@ -15,24 +30,35 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use('/api/categories', (req, res, next) => {
-  const categories = [
-    {
-    _id: 'bla',
-    title: 'Something',
-    budgetPercent: 20,
-    outcomesList: []
-    },
-    {
-      _id: 'blasda',
-      title: 'Another',
-      budgetPercent: 20,
-      outcomesList: []
-    }
-  ];
-  res.status(200).json({
-    message: 'categories fetched succesfully',
-    categories: categories
+app.post('/api/categories', (req, res, next) => {
+  const category = new Category({
+    title: req.body.title,
+    budgetPercent: req.body.budgetPercent,
+    outcomesList: req.body.outcomesList
+  });
+  category.save().then(createdCategory => {
+    res.status(201).json({
+      message: 'Category added successfully.',
+      categoryId: createdCategory._id
+    });
+  });
+});
+
+app.get('/api/categories', (req, res, next) => {
+  Category.find()
+  .then(documents => {
+     res.status(200).json({
+       message: 'Categories fetched successfully.',
+       categories: documents
+     });
+  });
+});
+
+app.delete('/api/categories/:id', (req, res, next) => {
+  Category.deleteOne({ _id: req.params.id })
+  .then(result => {
+    console.log(result);
+    res.status(200).json({message: 'Category deleted!'});
   });
 });
 
