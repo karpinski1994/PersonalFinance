@@ -1,8 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Subscription } from 'rxjs';
 import { NgForm } from '@angular/forms';
+import { ActivatedRoute, ParamMap } from '@angular/router';
 
 import { CategoriesService } from '../categories.service';
+import { Category } from '../category.model';
+
 
 @Component({
   selector: 'app-category-create',
@@ -14,8 +17,11 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
   enteredPercent = 0;
   availablePercent: number;
   private percentSub: Subscription;
+  private mode = 'create';
+  private categoryId: string;
+  category: Category;
 
-  constructor(public catServ: CategoriesService) {}
+  constructor(public catServ: CategoriesService, public route: ActivatedRoute) {}
 
   ngOnInit() {
     this.percentSub = this.catServ
@@ -23,18 +29,35 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
       .subscribe(percent => {
         this.availablePercent = percent;
       });
+    this.route.paramMap.subscribe( (paramMap: ParamMap) => {
+      if (paramMap.has('categoryId')) {
+        console.log('from if statement');
+        this.mode = 'edit';
+        this.categoryId = paramMap.get('categoryId');
+        this.category = this.catServ.getCategory(this.categoryId);
+        console.log(this.categoryId);
+      } else {
+        this.mode = 'create';
+        this.categoryId = null;
+      }
+    });
   }
 
-  onAddCategory(form: NgForm) {
+  onSaveCategory(form: NgForm) {
     if (form.invalid) {
       return;
     }
-    this.catServ.addCategory(
-      form.value.enteredTitle,
-      form.value.enteredPercent
-    );
+
+    if (this.mode === 'create') {
+      this.catServ.addCategory(form.value.enteredTitle, form.value.enteredPercent);
+    } else {
+      this.catServ.updateCategory(this.categoryId, form.value.enteredTitle, form.value.enteredPercent);
+    }
+
     form.resetForm();
   }
+
+
 
   // For slider
   pickPercent(event) {

@@ -19,6 +19,7 @@ import { AppComponent } from './app.component';
 import { CategoryCreateComponent } from './categories/category-create/category-create.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { CategoriesListComponent } from './categories/categories-list/categories-list.component';
+import { AppRoutingModule } from './app-routing.module';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { CategoriesListComponent } from './categories/categories-list/categories
   ],
   imports: [
     BrowserModule,
+    AppRoutingModule,
     BrowserAnimationsModule,
     FormsModule,
     MatInputModule,

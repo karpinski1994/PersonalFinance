@@ -3,8 +3,12 @@
 </button>
 <mat-drawer-container class="example-container">
   <mat-drawer #drawer class="example-sidenav" mode="side">
-
-    sth
-    sth sth
+    <span><a mat-button routerLink="/">MyCategories</a></span>
+    <div class="spacer"></div>
+    <ul>
+      <li>
+        <a mat-button routerLink="/create" routerLinkActive="mat-accent">New Category</a>
+      </li>
+    </ul>
   </mat-drawer>
 </mat-drawer-container>

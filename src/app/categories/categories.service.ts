@@ -37,6 +37,12 @@ export class CategoriesService {
     });
   }
 
+  getCategory(id: string) {
+    return {...this.categories.find( category => category.id === id )};
+  }
+
+
+
   getCategoryUpdateListener() {
     return this.categoriesUpdated.asObservable();
   }
@@ -52,6 +58,12 @@ export class CategoriesService {
       this.countAvailablePercent();
       this.percentUpdated.next(this.availablePercent);
     });
+  }
+
+  updateCategory(id: string, title: string, percent: number) {
+    const category: Category = { id: id, title: title, budgetPercent: percent, outcomesList: [] };
+    this.http.put('http://localhost:3000/api/categories/' + id, category)
+      .subscribe(response => console.log(response));
   }
 
   deleteCategory(categoryId: string) {

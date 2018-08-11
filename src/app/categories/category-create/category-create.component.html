@@ -1,13 +1,13 @@
 
 <mat-card>
-<form class="example-form" (submit)="onAddCategory(categoryForm)" #categoryForm="ngForm">
+<form class="example-form" (submit)="onSaveCategory(categoryForm)" #categoryForm="ngForm">
     <mat-form-field class="example-full-width">
       <input
         matInput
         type="text"
         placeholder="Title"
         name="enteredTitle"
-        ngModel
+        [ngModel]="category?.title"
         required
         #title="ngModel">
       <mat-error *ngIf="title.invalid">
@@ -23,7 +23,8 @@
       [max]="availablePercent"
       (input)="pickPercent($event)"
       name="enteredPercent"
-      ngModel>
+      [ngModel]="category?.budgetPercent"
+      >
     </mat-slider>
     <button
       mat-raised-button

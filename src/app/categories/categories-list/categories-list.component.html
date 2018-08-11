@@ -10,7 +10,7 @@
       </li>
     </ul>
     <mat-action-row>
-      <button mat-button color="primary">Edit</button>
+      <a mat-button color="primary" [routerLink]="['/edit', category.id] ">Edit</a>
       <button mat-button color="warn" (click)="onDelete(category.id)">Delete</button>
     </mat-action-row>
   </mat-expansion-panel>
