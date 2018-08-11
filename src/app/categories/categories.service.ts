@@ -33,8 +33,6 @@ export class CategoriesService {
     .subscribe((transformedCategories) => {
       this.categories = transformedCategories;
       this.categoriesUpdated.next([...this.categories]);
-      this.countAvailablePercent();
-      this.percentUpdated.next(this.availablePercent);
     });
   }
 
@@ -56,8 +54,6 @@ export class CategoriesService {
       category.id = id;
       this.categories.push(category);
       this.categoriesUpdated.next([...this.categories]);
-      this.countAvailablePercent();
-      this.percentUpdated.next(this.availablePercent);
       this.router.navigate(['/']);
     });
 
@@ -81,8 +77,6 @@ export class CategoriesService {
         });
         this.categories = updatedCategories;
         this.categoriesUpdated.next([...this.categories]);
-        this.countAvailablePercent();
-        this.percentUpdated.next(this.availablePercent);
       });
   }
 
@@ -100,5 +94,9 @@ export class CategoriesService {
 
   getPercentUpdateListener() {
     return this.percentUpdated.asObservable();
+  }
+
+  getPercent() {
+    return this.availablePercent;
   }
 }

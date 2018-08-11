@@ -29,6 +29,6 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.categoriesSub.unsubscribe();
+    // this.categoriesSub.unsubscribe();
   }
 }

@@ -24,11 +24,6 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
   constructor(public catServ: CategoriesService, public route: ActivatedRoute) {}
 
   ngOnInit() {
-    this.percentSub = this.catServ
-      .getPercentUpdateListener()
-      .subscribe(percent => {
-        this.availablePercent = percent;
-      });
     this.route.paramMap.subscribe( (paramMap: ParamMap) => {
       if (paramMap.has('categoryId')) {
         console.log('from if statement');
@@ -77,6 +72,6 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
   }
 
   ngOnDestroy() {
-    this.percentSub.unsubscribe();
+    // this.percentSub.unsubscribe();
   }
 }
