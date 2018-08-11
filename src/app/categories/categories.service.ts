@@ -4,6 +4,7 @@ import { Subject } from 'rxjs';
 import { map } from 'rxjs/operators';
 
 import { Category } from './category.model';
+import { Router } from '@angular/router';
 
 // Making only one instance of this service for the whole app
 @Injectable({providedIn: 'root'})
@@ -13,7 +14,7 @@ export class CategoriesService {
   private availablePercent = 100;
   private percentUpdated = new Subject<number>();
 
-  constructor(private http: HttpClient) {}
+  constructor(private http: HttpClient, private router: Router) {}
 
   getCategories() {
     this.http.get<{message: string, categories: any}>(
@@ -57,13 +58,18 @@ export class CategoriesService {
       this.categoriesUpdated.next([...this.categories]);
       this.countAvailablePercent();
       this.percentUpdated.next(this.availablePercent);
+      this.router.navigate(['/']);
     });
+
   }
 
   updateCategory(id: string, title: string, percent: number) {
     const category: Category = { id: id, title: title, budgetPercent: percent, outcomesList: [] };
     this.http.put('http://localhost:3000/api/categories/' + id, category)
-      .subscribe(response => console.log(response));
+      .subscribe(response => {
+        console.log(response);
+        this.router.navigate(['/']);
+      });
   }
 
   deleteCategory(categoryId: string) {

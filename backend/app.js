@@ -2,7 +2,7 @@ const express = require('express');
 const bodyParser = require('body-parser');
 const mongoose = require('mongoose');
 
-const Category = require('./models/category');
+const categoriesRoutes = require('./routes/categories.js');
 
 const app = express();
 
@@ -30,50 +30,6 @@ app.use((req, res, next) => {
   next();
 });
 
-app.post('/api/categories', (req, res, next) => {
-  const category = new Category({
-    title: req.body.title,
-    budgetPercent: req.body.budgetPercent,
-    outcomesList: req.body.outcomesList
-  });
-  category.save().then(createdCategory => {
-    res.status(201).json({
-      message: 'Category added successfully.',
-      categoryId: createdCategory._id
-    });
-  });
-});
-
-app.put("/api/categories/:id", (req, res, next) => {
-  const category = new Category({
-    _id: req.body.id,
-    title: req.body.title,
-    budgetPercent: req.body.budgetPercent,
-    outcomesList: req.body.outcomesList
-  });
-
-  Category.updateOne({ _id: req.params.id}, category).then(result => {
-    console.log(result);
-    res.status(200).json({message: 'Update successful!'});
-  });
-});
-
-app.get('/api/categories', (req, res, next) => {
-  Category.find()
-  .then(documents => {
-     res.status(200).json({
-       message: 'Categories fetched successfully.',
-       categories: documents
-     });
-  });
-});
-
-app.delete('/api/categories/:id', (req, res, next) => {
-  Category.deleteOne({ _id: req.params.id })
-  .then(result => {
-    console.log(result);
-    res.status(200).json({message: 'Category deleted!'});
-  });
-});
+app.use('/api/categories/', categoriesRoutes);
 
 module.exports = app;
