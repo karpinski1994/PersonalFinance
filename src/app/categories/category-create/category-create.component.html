@@ -1,6 +1,7 @@
 
 <mat-card>
-<form class="example-form" (submit)="onSaveCategory(categoryForm)" #categoryForm="ngForm">
+<mat-spinner *ngIf="isLoading"></mat-spinner>
+<form class="example-form" (submit)="onSaveCategory(categoryForm)" #categoryForm="ngForm" *ngIf="!isLoading">
     <mat-form-field class="example-full-width">
       <input
         matInput

@@ -16,6 +16,7 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
   enteredTitle = '';
   enteredPercent = 0;
   availablePercent: number;
+  isLoading = false;
   private percentSub: Subscription;
   private mode = 'create';
   private categoryId: string;
@@ -26,11 +27,18 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
   ngOnInit() {
     this.route.paramMap.subscribe( (paramMap: ParamMap) => {
       if (paramMap.has('categoryId')) {
-        console.log('from if statement');
         this.mode = 'edit';
         this.categoryId = paramMap.get('categoryId');
-        this.category = this.catServ.getCategory(this.categoryId);
-        console.log(this.categoryId);
+        this.isLoading = true;
+         this.catServ.getCategory(this.categoryId).subscribe(categoryData => {
+           this.isLoading = false;
+           this.category = {
+              id: categoryData._id,
+              title: categoryData.title,
+              budgetPercent: categoryData.budgetPercent,
+              outcomesList: Array<{}>()
+            };
+         });
       } else {
         this.mode = 'create';
         this.categoryId = null;
@@ -42,7 +50,7 @@ export class CategoryCreateComponent implements OnInit, OnDestroy {
     if (form.invalid) {
       return;
     }
-
+    this.isLoading = true;
     if (this.mode === 'create') {
       this.catServ.addCategory(form.value.enteredTitle, form.value.enteredPercent);
     } else {

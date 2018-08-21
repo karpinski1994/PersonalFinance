@@ -7,7 +7,7 @@ import { Category } from './category.model';
 import { Router } from '@angular/router';
 
 // Making only one instance of this service for the whole app
-@Injectable({providedIn: 'root'})
+@Injectable({ providedIn: 'root' })
 export class CategoriesService {
   private categories: Array<Category> = [];
   private categoriesUpdated = new Subject<Array<Category>>();
@@ -17,51 +17,68 @@ export class CategoriesService {
   constructor(private http: HttpClient, private router: Router) {}
 
   getCategories() {
-    this.http.get<{message: string, categories: any}>(
-      'http://localhost:3000/api/categories'
-    )
-    .pipe(map((categoryData) => {
-      return categoryData.categories.map(category => {
-        return {
-          id: category._id,
-          title: category.title,
-          budgetPercent: category.budgetPercent,
-          outcomesList: category.outcomesList
-        };
+    this.http
+      .get<{ message: string; categories: any }>(
+        'http://localhost:3000/api/categories'
+      )
+      .pipe(
+        map(categoryData => {
+          return categoryData.categories.map(category => {
+            return {
+              id: category._id,
+              title: category.title,
+              budgetPercent: category.budgetPercent,
+              outcomesList: category.outcomesList
+            };
+          });
+        })
+      )
+      .subscribe(transformedCategories => {
+        this.categories = transformedCategories;
+        this.categoriesUpdated.next([...this.categories]);
       });
-    }))
-    .subscribe((transformedCategories) => {
-      this.categories = transformedCategories;
-      this.categoriesUpdated.next([...this.categories]);
-    });
   }
 
   getCategory(id: string) {
-    return {...this.categories.find( category => category.id === id )};
+    return this.http.get<{ _id: string; title: string; budgetPercent: any }>(
+      'http://localhost:3000/api/categories/' + id
+    );
   }
-
-
 
   getCategoryUpdateListener() {
     return this.categoriesUpdated.asObservable();
   }
 
   addCategory(title: string, percent: number) {
-    const category: Category = { id: null, title: title, budgetPercent: percent, outcomesList: []};
-    this.http.post<{ message: string, categoryId: string }>('http://localhost:3000/api/categories', category)
-    .subscribe((responseData) => {
-      const id = responseData.categoryId;
-      category.id = id;
-      this.categories.push(category);
-      this.categoriesUpdated.next([...this.categories]);
-      this.router.navigate(['/']);
-    });
-
+    const category: Category = {
+      id: null,
+      title: title,
+      budgetPercent: percent,
+      outcomesList: []
+    };
+    this.http
+      .post<{ message: string; categoryId: string }>(
+        'http://localhost:3000/api/categories',
+        category
+      )
+      .subscribe(responseData => {
+        const id = responseData.categoryId;
+        category.id = id;
+        this.categories.push(category);
+        this.categoriesUpdated.next([...this.categories]);
+        this.router.navigate(['/']);
+      });
   }
 
   updateCategory(id: string, title: string, percent: number) {
-    const category: Category = { id: id, title: title, budgetPercent: percent, outcomesList: [] };
-    this.http.put('http://localhost:3000/api/categories/' + id, category)
+    const category: Category = {
+      id: id,
+      title: title,
+      budgetPercent: percent,
+      outcomesList: []
+    };
+    this.http
+      .put('http://localhost:3000/api/categories/' + id, category)
       .subscribe(response => {
         console.log(response);
         this.router.navigate(['/']);
@@ -80,12 +97,15 @@ export class CategoriesService {
       });
   }
 
+  // think about
   countAvailablePercent() {
-    if (this.categories.length > 0 ) {
+    if (this.categories.length > 0) {
       const categories = [...this.categories];
-      const categoriesTotalPercent = Number(categories
-        .map(category => category.budgetPercent)
-        .reduce((a, b) => +a + +b));
+      const categoriesTotalPercent = Number(
+        categories
+          .map(category => category.budgetPercent)
+          .reduce((a, b) => +a + +b)
+      );
       this.availablePercent = 100 - categoriesTotalPercent;
     } else {
       this.availablePercent = 100;
@@ -94,9 +114,5 @@ export class CategoriesService {
 
   getPercentUpdateListener() {
     return this.percentUpdated.asObservable();
-  }
-
-  getPercent() {
-    return this.availablePercent;
   }
 }

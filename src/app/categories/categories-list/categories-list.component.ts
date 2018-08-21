@@ -13,13 +13,16 @@ export class CategoriesListComponent implements OnInit, OnDestroy {
 
   categories: Array<Category> = [];
   private categoriesSub: Subscription;
+  isLoading = false;
 
   constructor( public  catServ: CategoriesService ) {}
 
   ngOnInit() {
+    this.isLoading = true;
     this.catServ.getCategories();
     this.categoriesSub = this.catServ.getCategoryUpdateListener()
     .subscribe((categories: Array<Category>) => {
+      this.isLoading = false;
       this.categories = categories;
     });
   }

@@ -12,7 +12,8 @@ import {
   MatSidenavModule,
   MatCheckboxModule,
   MatIconModule,
-  MatExpansionModule
+  MatExpansionModule,
+  MatProgressSpinnerModule
 } from '@angular/material';
 
 import { AppComponent } from './app.component';
@@ -41,6 +42,7 @@ import { AppRoutingModule } from './app-routing.module';
     MatCheckboxModule,
     MatIconModule,
     MatExpansionModule,
+    MatProgressSpinnerModule ,
     HttpClientModule
   ],
   providers: [
